@@ -53,7 +53,12 @@ taserver.delete('/aluno/:cpf',  function (req: express.Request, res: express.Res
       res.send({"failure": "O aluno não pode ser removido"});
     }
 })
-
-taserver.listen(3000, function () {
+var server = taserver.listen(3000, function () {
   console.log('Example app listening on port 3000!');
 })
+
+function closeServer(): void {
+  server.close();
+}
+
+export { server, closeServer }
