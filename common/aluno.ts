@@ -33,6 +33,12 @@ export class Aluno {
   }
 
   copyMetasFrom(from: Map<string,string>): void {
-    this.metas = new Map(from);
+    this.metas = new Map<string,string>();
+    for (let key in from) {
+      let value = from.get(key)
+      if(value != undefined){
+        this.metas.set(key, value);
+      }
+    }
   }
 }
