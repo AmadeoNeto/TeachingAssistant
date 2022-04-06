@@ -42,4 +42,16 @@ export class CadastroDeAlunos {
     getAlunos(): Aluno[] {
      return this.alunos;
    }
+
+   remover(cpf:string) : Aluno{
+     cpf = cpf.substring(1)
+      for (let index = 0; index < this.alunos.length; index++) {
+        let aluno = this.alunos[index];
+        if(aluno.cpf == cpf){
+          this.alunos.splice(index,1)
+          return aluno;
+        }
+      return null;
+    }
+  }
 }
