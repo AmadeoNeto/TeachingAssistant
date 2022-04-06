@@ -9,6 +9,7 @@ import { Aluno } from '../../../common/aluno';
 export class AlunoService {
   private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
   private taURL = 'http://localhost:3000';
+  private lastError = "";
 
   constructor(private http: HttpClient) { }
 
@@ -16,8 +17,18 @@ export class AlunoService {
     return this.http.post<any>(this.taURL + "/aluno", aluno, { headers: this.headers })
       .pipe(
         retry(2),
-        map(res => { if (res.success) { return aluno; } else { return null; } })
+        map(res => { if (res.success) { return aluno; }
+         else { 
+           this.lastError = res.failure.toString();
+           return null; 
+        } })
       );
+  } 
+
+  getError(): string{
+    let error = this.lastError
+    this.lastError = "";
+    return error;
   }
 
   atualizar(aluno: Aluno): Observable<Aluno> {

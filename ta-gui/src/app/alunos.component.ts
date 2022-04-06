@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { map } from 'rxjs';
 
 import { Aluno } from '../../../common/aluno';
 import { AlunoService } from './aluno.service';
@@ -13,6 +14,7 @@ export class AlunosComponent implements OnInit {
   aluno: Aluno = new Aluno();
   alunos: Aluno[] = [];
   cpfduplicado: boolean = false;
+  githubDuplicado: boolean = false;
 
   constructor(private alunoService: AlunoService) { }
 
@@ -24,7 +26,12 @@ export class AlunosComponent implements OnInit {
             this.alunos.push(ar);
             this.aluno = new Aluno();
           } else {
-            this.cpfduplicado = true;
+            let error:string = this.alunoService.getError().toString().toLowerCase();
+            if(error.includes("github")){
+              this.githubDuplicado = true;
+            } else if(error.includes("cpf")){
+              this.cpfduplicado = true;
+            }
           }
         },
         msg => { alert(msg.message); }
@@ -34,6 +41,7 @@ export class AlunosComponent implements OnInit {
 
   onMove(): void {
     this.cpfduplicado = false;
+    this.githubDuplicado = false;
   }
 
   ngOnInit(): void {
