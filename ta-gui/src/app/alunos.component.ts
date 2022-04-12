@@ -38,6 +38,11 @@ export class AlunosComponent implements OnInit {
       );
   }
 
+  removerAluno(cpf: string) : void {
+    this.alunoService.delete(cpf).subscribe(
+      
+    );
+  }
 
   onMove(): void {
     this.cpfduplicado = false;

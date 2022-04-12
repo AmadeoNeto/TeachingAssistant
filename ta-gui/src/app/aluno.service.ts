@@ -25,6 +25,13 @@ export class AlunoService {
       );
   } 
 
+  delete(cpf: string): Observable<string | ArrayBuffer> {
+    return this.http.delete<any>(this.taURL + "/aluno/:"+cpf, { headers: this.headers })
+      .pipe(
+        retry(2),
+      );
+  } 
+
   getError(): string{
     let error = this.lastError
     this.lastError = "";
