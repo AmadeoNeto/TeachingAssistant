@@ -51,7 +51,7 @@ export class CadastroDeAlunos {
           this.alunos.splice(index,1)
           return aluno;
         }
+      }
       return null;
-    }
   }
 }
