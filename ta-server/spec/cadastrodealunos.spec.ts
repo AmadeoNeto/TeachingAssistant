@@ -41,4 +41,13 @@ describe("O cadastro de alunos", () => {
     expect(aluno.nome).toBe("Mariana");
   })
 
+  it("aluno deletado corretamente" , () => {
+    cadastrarAluno("Mariana","683");
+    cadastrarAluno("Pedro","726");
+
+    cadastro.remover("726");
+    let aluno = expectSoUmAluno();
+    expect(aluno.nome == "Mariana");
+    expect(aluno.cpf == "683");
+  })
 })
