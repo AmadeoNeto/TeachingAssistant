@@ -24,7 +24,7 @@ describe("O servidor", () => {
     var options:any = {method: 'POST', uri: (base_url + "aluno"), body:{name: "Mari", cpf: "962"}, json: true};
     return request(options)
              .then(body =>
-                expect(body).toEqual({failure: "O aluno não pode ser cadastrado!"})
+                expect(body).toEqual({failure: "O aluno não pode ser cadastrado! Campos faltando!"})
              ).catch(e =>
                 expect(e).toEqual(null)
              )
@@ -32,10 +32,10 @@ describe("O servidor", () => {
 
 
   it("não cadastra alunos com CPF duplicado", () => {
-    var aluno1 = {"json":{"nome": "Mari", "cpf" : "965" , "login_github":"a", "email":""}};
-    var aluno2 = {"json":{"nome": "Pedro", "cpf" : "965", "login_github":"b", "email":""}};
-    var resposta1 = '{"nome":"Mari","cpf":"965","email":"","login_github":"a","metas":{}}';
-    var resposta2 = '{"nome":"Pedro","cpf":"965","email":"","login_github":"b","metas":{}}';
+    var aluno1 = {"json":{"nome": "Mari", "cpf" : "965" , "login_github":"a", "email":"a@cin"}};
+    var aluno2 = {"json":{"nome": "Pedro", "cpf" : "965", "login_github":"b", "email":"b@gmail"}};
+    var resposta1 = '{"nome":"Mari","cpf":"965","email":"a@cin","login_github":"a","metas":{}}';
+    var resposta2 = '{"nome":"Pedro","cpf":"965","email":"b@gmail","login_github":"b","metas":{}}';
 
     return request.post(base_url + "aluno", aluno1)
              .then(body => {
@@ -66,7 +66,7 @@ describe("O servidor", () => {
    });
 
    it("remove o aluno de cpf dado", () => {
-      let aluno = {"json":{"nome": "Janio", "cpf" : "111" , "login_github":"janio", "email":""}};
+      let aluno = {"json":{"nome": "Janio", "cpf" : "111" , "login_github":"janio", "email":"a@cin"}};
       let deleteOptions:any = {method: 'DELETE', uri: (base_url + "aluno/:111"), json: true,};
 
       return request.post(base_url + "aluno", aluno)
